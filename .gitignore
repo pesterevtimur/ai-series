@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local-only
+.local/
+*.local
+
+# Raw inbox от Claude Cowork — третьестороний контент (fair use, internal only).
+# Никогда не пушится в публичный repo: расшифровки сцен, выдержки из критики и т.д.
+# Обработанные эталоны живут в golden/ (наши reconstruction'ы / выдержки с атрибуцией).
+raw/
