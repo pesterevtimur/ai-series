@@ -22,3 +22,4 @@
 [2026-05-29] infra | .gitignore + tmp/ (P-9 — для tmp/critic-reports/ до архивации)
 [2026-05-29] docs | C.1 пункт 10 — cowork/prompt.md → v1.1: Section 0.1 Mandate boundary (P-11), «Что нужно от шоураннера» → «Возможные применения (notes)», derived anti-lessons предупреждение (P-13), frontmatter примера обновлён под primary/secondary_categories (P-12) + source_show (P-14)
 [2026-05-29] golden | C.1 пункт 11 — golden/README.md создан как bootstrap-заготовка: политики P-11/P-13/P-12/P-14, golden-audit правило (квартально), flagged risks (Cowork bias, subjective, P-15 anti-corpus), acceptance bootstrap state для ПП1
+[2026-05-29] docs | C.1 пункт 12 — writing-plans ПП1 через superpowers:writing-plans skill: 5 plan-файлов в docs/superpowers/plans/ — index + Phase 1 (lint scripts) full TDD detail + Phases 2/3/4 outlines (expand to full detail at start of each phase per phased-plan-before-code discipline)
