@@ -17,3 +17,4 @@
 [2026-05-29] decision | D-002 v2 strategic acceptance Тимура (commit e066cd4); B.4.1/B.4.2 Cowork-партии сознательно пропущены — flagged risk на A3/A5 R-3 калибровку, добор отложен до ПП2
 [2026-05-29] docs | P-8 resolved: docs/extended-thinking-mechanism.md — поле effort: max в .claude/agents/*.md frontmatter; design spec § 11.5.1 готов к обновлению на step C.1.9
 [2026-05-29] docs | P-6 resolved: docs/cost-estimate-pp1.md — ПП1 smoke-test pipeline $40 mid в коридоре $16-$62 (Opus 4.7 effort: max все 6 критиков); R-4 cost commitment в D-001 обновляется на step C.1.9
+[2026-05-29] docs | P-6 переписан под подписочный сценарий: Max 5x ($100/mo flat), marginal $0; ~200 messages mid (130-300 коридор); главный риск — auto-switch Opus→Sonnet при высоком usage окна, митигация через pacing 40-50 msg/день
