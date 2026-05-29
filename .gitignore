@@ -27,3 +27,8 @@ desktop.ini
 # Никогда не пушится в публичный repo: расшифровки сцен, выдержки из критики и т.д.
 # Обработанные эталоны живут в golden/ (наши reconstruction'ы / выдержки с атрибуцией).
 raw/
+
+# Tmp — рабочие YAML-отчёты критиков до архивации (D-002 P-9).
+# Создаются adversarial-review-pass'ом immediately после каждого Task-вызова критика.
+# После commit артефакта перемещаются в docs/critic-reports-archive/ (tracked, для аудита).
+tmp/
