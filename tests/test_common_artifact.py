@@ -36,3 +36,21 @@ def test_artifact_from_file(fixtures_dir):
     art = Artifact.from_file(fixtures_dir / "mini_bible" / "thesis.md")
     assert art.id == "thesis-001"
     assert art.path == fixtures_dir / "mini_bible" / "thesis.md"
+
+
+def test_artifact_references_null_becomes_empty():
+    text = "---\nid: x\nversion: 1\nstatus: draft\nreferences:\n---\nbody"
+    art = Artifact.from_text(text)
+    assert art.references == []
+
+
+def test_artifact_references_string_raises():
+    text = '---\nid: x\nversion: 1\nstatus: draft\nreferences: "single-string"\n---\nbody'
+    with pytest.raises(ArtifactError, match="'references' must be a list"):
+        Artifact.from_text(text)
+
+
+def test_artifact_version_string_raises():
+    text = '---\nid: x\nversion: "1.0"\nstatus: draft\nreferences: []\n---\nbody'
+    with pytest.raises(ArtifactError, match="'version' must be an int"):
+        Artifact.from_text(text)

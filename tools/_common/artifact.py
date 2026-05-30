@@ -40,11 +40,25 @@ class Artifact:
                 f"invalid status '{status}'; must be one of {sorted(VALID_STATUSES)}"
             )
 
+        version = fm["version"]
+        if not isinstance(version, int):
+            raise ArtifactError(
+                f"'version' must be an int, got {type(version).__name__}"
+            )
+
+        refs = fm["references"]
+        if refs is None:
+            refs = []
+        elif not isinstance(refs, list):
+            raise ArtifactError(
+                f"'references' must be a list, got {type(refs).__name__}"
+            )
+
         return cls(
             id=fm["id"],
-            version=fm["version"],
+            version=version,
             status=status,
-            references=list(fm["references"]),
+            references=refs,
             body=body,
             raw_frontmatter=fm,
             path=path,
