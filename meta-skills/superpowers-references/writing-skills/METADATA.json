@@ -1,0 +1,12 @@
+{
+  "name": "writing-skills",
+  "source_repo": "obra/superpowers",
+  "source_sha": "f2cbfbef",
+  "local_version": "5.1.0",
+  "source_path": "skills/writing-skills/SKILL.md",
+  "pinned_on": "2026-05-30",
+  "pinned_by": "Claude Code (ПП1 Phase 3 Task 0)",
+  "purpose": "база авторинга скиллов; адаптируется в writing-narrative-skills",
+  "adapted_to": ".claude/skills/writing-narrative-skills/SKILL.md",
+  "byte_equal_verified_on": "2026-05-30"
+}
