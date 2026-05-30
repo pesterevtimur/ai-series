@@ -53,3 +53,24 @@ def test_not_applicable_requires_reason(tmp_path):
     rep = validate_report(rep_path, smoke_test_mode=False)
     assert rep.exit_code() == 1
     assert any("not_applicable_reason" in i.message for i in rep.errors())
+
+
+def test_nonexistent_report_flagged(tmp_path):
+    rep = validate_report(tmp_path / "does-not-exist.yaml", smoke_test_mode=False)
+    assert rep.exit_code() == 1
+    assert any("cannot read file" in i.message for i in rep.errors())
+
+
+def test_model_used_as_list_flagged(tmp_path):
+    rep_path = tmp_path / "rep.yaml"
+    rep_path.write_text(
+        "verdict: pass\nmodel_used: [opus, sonnet]\n"
+        "checked: [a, b, c]\nevidence_from_artifact: [x, y]\n"
+        "golden_calibration_used: [z]\n"
+        "reasoning: " + " word" * 105 + "\n"
+        "counter_test_attempted:\n  what_searched: x\n  why_this: y\n  why_not_found: z\n",
+        encoding="utf-8",
+    )
+    rep = validate_report(rep_path, smoke_test_mode=False)
+    assert rep.exit_code() == 1
+    assert any("model_used must be a string" in i.message for i in rep.errors())

@@ -18,7 +18,11 @@ MIN_REASONING_WORDS = 100
 
 def validate_report(path: Path, smoke_test_mode: bool = False) -> Reporter:
     rep = Reporter(script="critic_report_validator")
-    text = Path(path).read_text(encoding="utf-8")
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError as e:
+        rep.add_issue(Issue(IssueLevel.ERROR, str(path), f"cannot read file: {e}"))
+        return rep
     try:
         data = yaml.safe_load(text)
     except yaml.YAMLError as e:
@@ -51,9 +55,16 @@ def _check_verdict(data: dict, path: Path, rep: Reporter) -> None:
 
 def _check_model_used(data: dict, path: Path, rep: Reporter) -> None:
     model = data.get("model_used")
-    if not model:
+    if model is None or model == "":
         rep.add_issue(Issue(IssueLevel.ERROR, str(path), "missing required field 'model_used' (P-8)"))
-    elif model not in VALID_MODELS:
+        return
+    if not isinstance(model, str):
+        rep.add_issue(Issue(
+            IssueLevel.ERROR, str(path),
+            f"model_used must be a string, got {type(model).__name__}",
+        ))
+        return
+    if model not in VALID_MODELS:
         rep.add_issue(Issue(
             IssueLevel.ERROR, str(path),
             f"invalid model_used '{model}'; must be one of {sorted(VALID_MODELS)}",
