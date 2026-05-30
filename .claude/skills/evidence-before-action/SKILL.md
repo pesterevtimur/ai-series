@@ -51,10 +51,16 @@ Discipline-BLOCKER. Любая фраза «готово / работает / п
    - Для critic claims → путь к свежему YAML в `tmp/critic-reports/<artifact-id>/<critic>-<timestamp>.yaml` (P-9)
    - Для tool claims → JSON-отчёт скрипта в stdout + exit code (Phase 1 tools)
 3. **Если доказательство ≥1 сообщения назад / не в текущей сессии → BLOCK.** Шоураннер обязан перезапустить проверку.
-4. **Если доказательство присутствует:**
-   - Проверь свежесть (timestamp / последовательность вызовов)
-   - Проверь соответствие (тот же артефакт? те же критики? те же входы?)
-   - Если ок → action разрешён.
+4. **Если доказательство присутствует — четыре проверки соответствия:**
+   - **Свежесть:** timestamp / последовательность вызовов в текущей сессии
+   - **Артефакт:** `artifact-id` в YAML совпадает с текущим артефактом (для critic claims)
+   - **Модель:** `model_used: opus` (не sonnet — D-002 P-8 auto-switch audit; если sonnet — escalate D-NNN per cost-estimate § 10)
+   - **Полнота counter_test:** для critic verdict=pass `counter_test_attempted` содержит все 3 элемента what_searched / why_this / why_not_found (D-002 P-7); иначе verdict невалиден и pass не считается
+   - Все четыре ОК → action разрешён.
+
+5. **Дополнительно для golden claims** (golden_freshness зелёный / diversity acknowledged):
+   - Свежий exit 0 от `tools/golden_freshness.py` включая **P-12 weights** (primary полностью + secondary × 0.5) и **P-14 diversity warnings** либо acknowledged в `golden/README.md`, либо устранены через добивочную партию
+   - «Diversity warnings есть, но я их игнорирую» → BLOCK. Acknowledge должно быть текстуальным в README с reason.
 
 ## Что НЕ делает
 
