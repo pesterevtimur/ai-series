@@ -15,6 +15,7 @@ _FM_PATTERN = re.compile(
 
 
 def parse_frontmatter(text: str) -> tuple[dict, str]:
+    text = text.lstrip("﻿")  # strip UTF-8 BOM if present
     if not text.startswith("---\n"):
         raise FrontmatterError("missing frontmatter (no opening '---')")
     match = _FM_PATTERN.match(text)

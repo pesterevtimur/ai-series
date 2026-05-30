@@ -45,3 +45,10 @@ def test_parse_boolean_values():
     text = "---\nreconstruction: true\n---\nbody"
     fm, body = parse_frontmatter(text)
     assert fm["reconstruction"] is True
+
+
+def test_parse_bom_prefix():
+    text = "﻿---\nid: foo\n---\nbody"
+    fm, body = parse_frontmatter(text)
+    assert fm == {"id": "foo"}
+    assert body == "body"
