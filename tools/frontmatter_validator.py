@@ -11,13 +11,35 @@ from tools._common.reporter import Reporter, Issue, IssueLevel
 
 def validate_directory(root: Path) -> Reporter:
     rep = Reporter(script="frontmatter_validator")
+
+    if not root.exists():
+        rep.add_issue(Issue(
+            IssueLevel.ERROR, str(root), f"root path does not exist: {root}",
+        ))
+        return rep
+    if not root.is_dir():
+        rep.add_issue(Issue(
+            IssueLevel.ERROR, str(root), f"root path is not a directory: {root}",
+        ))
+        return rep
+
     seen_ids: dict[str, list[str]] = defaultdict(list)
 
     for md in root.rglob("*.md"):
+        # Skip well-known non-artefact files (docs, templates):
+        # README.md, CHANGELOG.md, files starting with '_' (e.g. _template.md, _manifest.md)
+        if md.name in ("README.md", "CHANGELOG.md") or md.name.startswith("_"):
+            continue
         try:
             art = Artifact.from_file(md)
         except ArtifactError as e:
             rep.add_issue(Issue(IssueLevel.ERROR, str(md), str(e)))
+            continue
+        except UnicodeDecodeError as e:
+            rep.add_issue(Issue(
+                IssueLevel.ERROR, str(md),
+                f"file is not valid UTF-8: {e.reason}",
+            ))
             continue
         seen_ids[art.id].append(str(md))
 
