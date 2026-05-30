@@ -1,0 +1,11 @@
+verdict: pass
+model_used: opus
+checked: ["a", "b", "c"]
+evidence_from_artifact: ["x", "y"]
+golden_calibration_used: ["golden/x.md — note"]
+reasoning: "Слишком короткий reasoning. Меньше ста слов чтоб провалить требование."
+flags: []
+counter_test_attempted:
+  what_searched: ""
+  why_this: ""
+  why_not_found: ""
