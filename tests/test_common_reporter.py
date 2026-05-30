@@ -27,3 +27,19 @@ def test_reporter_warning_does_not_fail():
     payload = json.loads(r.to_json())
     assert payload["status"] == "pass"
     assert len(payload["warnings"]) == 1
+
+
+def test_reporter_serializes_path_object():
+    from pathlib import Path
+    r = Reporter(script="x")
+    r.add_issue(Issue(level=IssueLevel.ERROR, path=Path("some/file.md"), message="m"))
+    payload = json.loads(r.to_json())
+    assert payload["issues"][0]["path"] == str(Path("some/file.md"))
+
+
+def test_reporter_accepts_string_level():
+    r = Reporter(script="x")
+    r.add_issue(Issue(level="error", path="x.md", message="m"))
+    assert r.exit_code() == 1
+    payload = json.loads(r.to_json())
+    assert payload["issues"][0]["level"] == "error"

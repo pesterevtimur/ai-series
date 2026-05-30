@@ -17,10 +17,14 @@ class Issue:
     message: str
     context: dict = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.level, IssueLevel):
+            self.level = IssueLevel(self.level)
+
     def to_dict(self) -> dict:
         return {
             "level": self.level.value,
-            "path": self.path,
+            "path": str(self.path),
             "message": self.message,
             "context": self.context,
         }
